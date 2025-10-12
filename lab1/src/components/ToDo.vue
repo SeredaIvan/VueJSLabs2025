@@ -3,15 +3,17 @@ import { ref, onMounted } from "vue";
 import NavButtons from "./NavButtons.vue";
 import Loader from "./Loader.vue";
 import useTasks from "../store/task";
+import TaskList from "./TaskList.vue";
 
 const { loadTasks } = useTasks();
 const loading = ref(false);
 
 onMounted(async () => {       
   loading.value = true;
-  await loadTasks();
+  const {tasks}= await loadTasks();
   loading.value = false;
 });
+
 </script>
 
 <template>
@@ -19,7 +21,7 @@ onMounted(async () => {
     <h1>ToDo App</h1>
     <NavButtons />
     <Loader v-if="loading" />
-    
+    <TaskList :tasks="tasks" />
   </div>
 </template>
 

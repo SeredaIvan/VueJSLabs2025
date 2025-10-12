@@ -54,7 +54,7 @@ function useTasks() {
         const arr = JSON.parse(saved);
         arr.forEach((t) => tasks.set(t.id, reactive(t)));
       }
-      resolve();
+      resolve(tasks);
     });
   }
 
