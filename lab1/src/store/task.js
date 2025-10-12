@@ -1,5 +1,5 @@
 import { reactive, provide } from "vue";
-import { createId } from "@paralleldrive/cuid2";
+import cuid from "cuid";
 
 function useTasks() {
   const tasks = reactive(new Map());
@@ -10,7 +10,7 @@ function useTasks() {
     status = "active",
     priority = "low"
   ) {
-    const id = createId();
+    const id = cuid();
     const task = reactive({
       id,
       title,
@@ -47,12 +47,15 @@ function useTasks() {
     return { message: "tasksaved" };
   }
 
-  async function loadTasks() {
-    const saved = localStorage.getItem("tasks");
-    if (saved) {
-      const arr = JSON.parse(saved);
-      arr.forEach((t) => tasks.set(t.id, reactive(t)));
-    }
+  function loadTasks() {
+    return new Promise((resolve) => {
+      const saved = localStorage.getItem("tasks");
+      if (saved) {
+        const arr = JSON.parse(saved);
+        arr.forEach((t) => tasks.set(t.id, reactive(t)));
+      }
+      resolve();
+    });
   }
 
   provide("tasks", tasks);
@@ -64,7 +67,7 @@ function useTasks() {
 
   loadTasks();
 
-  return { tasks, addTask, removeTask, editTask, toggleTask,loadTasks };
+  return { tasks, addTask, removeTask, editTask, toggleTask, loadTasks };
 }
 
 export default useTasks;
