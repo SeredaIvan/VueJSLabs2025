@@ -48,7 +48,7 @@ watch(
     <div class="task-header">
       <h3 class="task-title">
         <template v-if="editing">
-          <input v-model="task.title" />
+          <input v-model="task.title" class="edit-input" />
         </template>
         <template v-else>{{ task.title }}</template>
       </h3>
@@ -58,7 +58,11 @@ watch(
           {{ task.status === "done" ? "✅ Завершено" : "🕓 Активне" }}
         </span>
 
-        <button v-if="isEdit" class="edit-btn" @click="enableEditing">
+        <button
+          v-if="isEdit && !editing"
+          class="edit-btn"
+          @click="enableEditing"
+        >
           ✏️
         </button>
 
@@ -68,20 +72,14 @@ watch(
       </div>
     </div>
 
-    <p class="task-desc">
-      <template v-if="editing">
-        <textarea v-model="task.description" />
-      </template>
-      <template v-else>{{ task.description }}</template>
-    </p>
+    <div v-if="editing" class="task-editing">
+      <textarea
+        v-model="task.description"
+        class="edit-textarea"
+        placeholder="Опис завдання"
+      ></textarea>
 
-    <div class="task-footer">
-      <span class="task-id">#{{ task.id.slice(0, 6) }}</span>
-      <span class="task-date">
-        {{ new Date(task.createdAt).toLocaleString("uk-UA") }}
-      </span>
-
-      <template v-if="editing">
+      <div class="edit-controls">
         <select v-model="task.priority" class="task-priority">
           <option value="low">Низький</option>
           <option value="medium">Середній</option>
@@ -93,20 +91,28 @@ watch(
           <option value="done">Завершено</option>
         </select>
 
-        <button class="save-btn" @click="disableEditing">💾</button>
-      </template>
+        <button class="save-btn" @click="disableEditing">💾 Зберегти</button>
+      </div>
+    </div>
 
-      <template v-else>
-        <span class="task-priority" :class="task.priority">
-          {{
-            task.priority === "low"
-              ? "Низький"
-              : task.priority === "medium"
-              ? "Середній"
-              : "Високий"
-          }}
-        </span>
-      </template>
+    <template v-else>
+      <p class="task-desc">{{ task.description }}</p>
+    </template>
+
+    <div class="task-footer">
+      <span class="task-id">#{{ task.id.slice(0, 6) }}</span>
+      <span class="task-date">{{
+        new Date(task.createdAt).toLocaleString("uk-UA")
+      }}</span>
+      <span class="task-priority" :class="task.priority">
+        {{
+          task.priority === "low"
+            ? "Низький"
+            : task.priority === "medium"
+            ? "Середній"
+            : "Високий"
+        }}
+      </span>
     </div>
   </li>
 </template>
@@ -190,15 +196,34 @@ ul {
 .delete-btn:hover {
   background: #f44336;
 }
-input,
-textarea,
+input.edit-input,
+textarea.edit-textarea,
 select {
   background: #2a2a2a;
   color: white;
   border: 1px solid #555;
   border-radius: 6px;
-  padding: 4px 6px;
-  width: 100%;
+  padding: 6px 8px;
+  width: 95%;
+  resize: none;
+}
+textarea.edit-textarea {
+  min-height: 70px;
+  margin: 10px;
+}
+.task-editing {
+  background: #2a2a2a;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #444;
+}
+.edit-controls {
+  margin-left:10px;
+  margin-right: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 .task-desc {
   color: #ccc;
