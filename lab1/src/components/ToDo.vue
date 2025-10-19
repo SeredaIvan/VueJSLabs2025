@@ -22,9 +22,11 @@ onMounted(async () => {
 function toggleModalAddTask() {
   modalAdd.value = !modalAdd.value;
 }
+
 function toggleIsDelete() {
   isDelete.value = !isDelete.value;
 }
+
 function toggleIsEdit() {
   isEdit.value = !isEdit.value;
 }
@@ -33,7 +35,14 @@ function toggleIsEdit() {
 <template>
   <div>
     <h1>ToDo App</h1>
-    <NavButtons @defineAdd="toggleModalAddTask" @defineDelete="toggleIsDelete" @defineEdit="toggleIsEdit" /> 
+    <NavButtons
+      @defineAdd="toggleModalAddTask"
+      @defineDelete="toggleIsDelete"
+      @defineEdit="toggleIsEdit"
+      :activeDelete="isDelete"
+      :activeEdit="isEdit"
+    />
+
     <Loader v-if="loading" />
     <TaskList :tasks="tasks" :isEdit="isEdit" :isDelete="isDelete" />
     <AddTask v-if="modalAdd" :toggleModalTask="toggleModalAddTask" />
@@ -43,5 +52,6 @@ function toggleIsEdit() {
 <style scoped>
 h1 {
   text-align: center;
+  margin-bottom: 20px;
 }
 </style>
