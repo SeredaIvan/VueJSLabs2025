@@ -42,7 +42,6 @@ function toggleIsEdit() {
       :activeDelete="isDelete"
       :activeEdit="isEdit"
     />
-
     <Loader v-if="loading" />
     <TaskList :tasks="tasks" :isEdit="isEdit" :isDelete="isDelete" />
     <AddTask v-if="modalAdd" :toggleModalTask="toggleModalAddTask" />

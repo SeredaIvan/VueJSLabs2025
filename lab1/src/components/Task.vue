@@ -96,7 +96,7 @@ watch(
     </div>
 
     <template v-else>
-      <p class="task-desc">{{ task.description }}</p>
+      <p class="task-desc" v-html="task.description.replace(/\n/g, '<br>')"></p>
     </template>
 
     <div class="task-footer">
@@ -158,6 +158,9 @@ ul {
   font-weight: 600;
   margin: 0;
   color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .task-status {
   font-size: 0.9rem;
@@ -219,7 +222,7 @@ textarea.edit-textarea {
   border: 1px solid #444;
 }
 .edit-controls {
-  margin-left:10px;
+  margin-left: 10px;
   margin-right: 10px;
   display: flex;
   gap: 10px;
@@ -230,7 +233,10 @@ textarea.edit-textarea {
   margin: 8px 0 12px 0;
   font-size: 0.95rem;
   white-space: pre-line;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
+
 .task-footer {
   display: flex;
   justify-content: space-between;
