@@ -2,26 +2,41 @@
 import { ref, onMounted } from "vue";
 import NavButtons from "./NavButtons.vue";
 import Loader from "./Loader.vue";
-import useTasks from "../store/task";
 import TaskList from "./TaskList.vue";
+import AddTask from "./AddTask.vue";
+import { useTaskProvider } from "../provider/useTaskProvider";
 
-const { loadTasks } = useTasks();
+const { tasks, loadTasks } = useTaskProvider();
+
 const loading = ref(false);
+const modalAdd = ref(false);
+const isEdit = ref(false);
+const isDelete = ref(false);
 
-onMounted(async () => {       
+onMounted(async () => {
   loading.value = true;
-  const {tasks}= await loadTasks();
+  await loadTasks();
   loading.value = false;
 });
 
+function toggleModalAddTask() {
+  modalAdd.value = !modalAdd.value;
+}
+function toggleIsDelete() {
+  isDelete.value = !isDelete.value;
+}
+function toggleIsEdit() {
+  isEdit.value = !isEdit.value;
+}
 </script>
 
 <template>
   <div>
     <h1>ToDo App</h1>
-    <NavButtons />
+    <NavButtons @defineAdd="toggleModalAddTask" @defineDelete="toggleIsDelete" @defineEdit="toggleIsEdit" /> 
     <Loader v-if="loading" />
-    <TaskList :tasks="tasks" />
+    <TaskList :tasks="tasks" :isEdit="isEdit" :isDelete="isDelete" />
+    <AddTask v-if="modalAdd" :toggleModalTask="toggleModalAddTask" />
   </div>
 </template>
 
