@@ -1,5 +1,5 @@
 <script setup>
-import { watch, toRefs } from "vue";
+import { toRefs, reactive, watch, computed } from "vue";
 
 const props = defineProps({
   filters: Object,
@@ -8,10 +8,50 @@ const props = defineProps({
 
 const emit = defineEmits(["updateFilters", "updateSort"]);
 
-const { filters } = toRefs(props);
+const { filters: propsFilters } = toRefs(props);
+
+const localFilters = reactive({
+  title: propsFilters.value?.title ?? "",
+  description: propsFilters.value?.description ?? "",
+  status: propsFilters.value?.status ?? "",
+  priority: propsFilters.value?.priority ?? "",
+  dateFrom: propsFilters.value?.dateFrom ?? "",
+  dateTo: propsFilters.value?.dateTo ?? "",
+});
+
+watch(
+  () => propsFilters.value,
+  (newVal) => {
+    if (!newVal) return;
+    localFilters.title = newVal.title ?? "";
+    localFilters.description = newVal.description ?? "";
+    localFilters.status = newVal.status ?? "";
+    localFilters.priority = newVal.priority ?? "";
+    localFilters.dateFrom = newVal.dateFrom ?? "";
+    localFilters.dateTo = newVal.dateTo ?? "";
+  },
+  { immediate: true, deep: true }
+);
+
+watch(
+  localFilters,
+  (newVal) => {
+    emit("updateFilters", { ...newVal });
+  },
+  { deep: true }
+);
+
+const sort = computed({
+  get() {
+    return props.sortOption ?? "createdAt_desc";
+  },
+  set(val) {
+    emit("updateSort", val);
+  },
+});
 
 function clearFilters() {
-  emit("updateFilters", {
+  Object.assign(localFilters, {
     title: "",
     description: "",
     status: "",
@@ -20,31 +60,30 @@ function clearFilters() {
     dateTo: "",
   });
 }
-
-watch(filters, (newVal) => {
-  emit("updateFilters", newVal);
-}, { deep: true });
 </script>
 
 <template>
   <div class="filters">
-    <input v-model="props.filters.title" placeholder="Назва" />
-    <input v-model="props.filters.description" placeholder="Опис" />
-    <select v-model="props.filters.status">
+    <input v-model="localFilters.title" placeholder="Назва" />
+    <input v-model="localFilters.description" placeholder="Опис" />
+
+    <select v-model="localFilters.status">
       <option value="">Статус</option>
       <option value="active">Активне</option>
       <option value="done">Завершено</option>
     </select>
-    <select v-model="props.filters.priority">
+
+    <select v-model="localFilters.priority">
       <option value="">Пріоритет</option>
       <option value="low">Низький</option>
       <option value="medium">Середній</option>
       <option value="high">Високий</option>
     </select>
-    <input type="date" v-model="props.filters.dateFrom" />
-    <input type="date" v-model="props.filters.dateTo" />
 
-    <select v-model="props.sortOption" @change="emit('updateSort', props.sortOption)">
+    <input type="date" v-model="localFilters.dateFrom" />
+    <input type="date" v-model="localFilters.dateTo" />
+
+    <select v-model="sort">
       <option value="createdAt_desc">Дата ↓</option>
       <option value="createdAt_asc">Дата ↑</option>
       <option value="priority_desc">Пріоритет ↓</option>
