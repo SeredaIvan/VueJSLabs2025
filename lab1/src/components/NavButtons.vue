@@ -19,11 +19,11 @@ function handleToggleEdit() {
 
 <template>
   <div class="nav-buttons">
-    <button @click="handleAddClick" class="btn">Додати</button>
+    <button @click="handleAddClick" class="btn add">Додати</button>
 
     <button
       @click="handleToggleDelete"
-      class="btn"
+      class="btn delete"
       :class="{ active: props.activeDelete }"
     >
       Видалити
@@ -31,7 +31,7 @@ function handleToggleEdit() {
 
     <button
       @click="handleToggleEdit"
-      class="btn"
+      class="btn edit"
       :class="{ active: props.activeEdit }"
     >
       Редагувати
@@ -42,30 +42,45 @@ function handleToggleEdit() {
 <style scoped>
 .nav-buttons {
   display: flex;
-  gap: 10px;
-  align-items: center;
+  gap: 12px;
   justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .btn {
-  padding: 8px 16px;
-  border: 1px solid #ccc;
-  background: #242424;
-  border-radius: 6px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: 1px solid #555;
+  background: #1e1e1e;
+  color: white;
   cursor: pointer;
-  transition: 0.2s;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
 }
 
 .btn:hover {
-  background: #f1f1f1;
-  color:#242424;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+  background: #2a2a2a;
+}
+
+.btn.add {
+  border-left: 5px solid #007bff;
+}
+
+.btn.delete {
+  border-left: 5px solid #f44336;
+}
+
+.btn.edit {
+  border-left: 5px solid #ffb74d;
 }
 
 .btn.active {
-  background: #3b82f6; 
-  color: white;
-  border-color: #3b82f6;
   transform: scale(0.97);
-  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 8px rgba(255,255,255,0.5);
+  background: #333;
 }
 </style>
