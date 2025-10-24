@@ -13,9 +13,18 @@ const description = ref("");
 const priority = ref("low");
 
 function handleSubmit() {
-  if (!title.value.trim()) return alert("Введіть назву завдання!");
+  const trimmedTitle = title.value.trim();
+  const trimmedDescription = description.value.trim();
 
-  addTask(title.value, description.value, "active", priority.value);
+  if (!trimmedTitle) {
+    return alert("Введіть назву завдання!");
+  }
+
+  if (!trimmedDescription) {
+    return alert("Введіть опис завдання!");
+  }
+
+  addTask(trimmedTitle, trimmedDescription, "active", priority.value);
 
   title.value = "";
   description.value = "";
@@ -28,8 +37,6 @@ function handleClose() {
   props.toggleModalTask();
 }
 </script>
-
-
 
 <template>
   <div class="modal-backdrop" @click.self="handleClose">
