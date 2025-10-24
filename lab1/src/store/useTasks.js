@@ -120,6 +120,16 @@ export function useTasks() {
     }
   }
 
+  const total = computed(() => tasks.value.length);
+
+  const active = computed(() =>
+    tasks.value.filter((t) => t.status === "active").length
+  );
+
+  const completed = computed(() =>
+    tasks.value.filter((t) => t.status === "done").length
+  );
+
   loadTasks();
 
   return {
@@ -132,5 +142,8 @@ export function useTasks() {
     editTask,
     toggleTask,
     loadTasks,
+    total,
+    active,
+    completed,
   };
 }

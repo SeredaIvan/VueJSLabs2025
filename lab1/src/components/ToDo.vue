@@ -5,6 +5,7 @@ import Loader from "./Loader.vue";
 import TaskList from "./TaskList.vue";
 import TaskFilter from "./TaskFilter.vue";
 import AddTask from "./AddTask.vue";
+import Calculating from "./Calculating.vue"
 import { useTaskProvider } from "../provider/useTaskProvider";
 
 const { tasks, filters, sortOption, filteredAndSortedTasks, loadTasks } =
@@ -59,7 +60,7 @@ function toggleIsEdit() {
       @updateFilters="updateFilters"
       @updateSort="updateSort"
     />
-
+    <Calculating/>
     <Loader v-if="loading" />
     
     <TaskList :tasks="filteredAndSortedTasks" :isEdit="isEdit" :isDelete="isDelete" />
