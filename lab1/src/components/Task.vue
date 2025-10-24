@@ -10,7 +10,7 @@ const props = defineProps({
 
 const emit = defineEmits(["update"]);
 
-const { removeTask, editTask } = useTaskConsumer();
+const { removeTask, editTask, toggleTask } = useTaskConsumer();
 const editing = ref(false);
 
 function handleDelete() {
@@ -25,6 +25,11 @@ function enableEditing() {
 
 function disableEditing() {
   editing.value = false;
+  editTask(props.task.id, props.task);
+}
+
+function toggleStatus() {
+  toggleTask(props.task.id);
 }
 
 watch(
@@ -54,7 +59,14 @@ watch(
       </h3>
 
       <div class="task-actions">
-        <span class="task-status" :class="task.status">
+        <span
+          class="task-status"
+          :class="task.status"
+          @click="toggleStatus"
+          :title="
+            task.status === 'done' ? 'Зробити активним' : 'Позначити виконаним'
+          "
+        >
           {{ task.status === "done" ? "✅ Завершено" : "🕓 Активне" }}
         </span>
 
@@ -149,6 +161,7 @@ ul {
   align-items: center;
 }
 .task-actions {
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 8px;
