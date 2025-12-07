@@ -4,5 +4,5 @@
 
 \### Список робіт
 
-1\. \[Lab 1 —  Знайомство з Vue.js 3(Composition API)](lab1/)
-
+1. [Lab 1 — Знайомство з Vue.js 3 (Composition API)](lab1/)
+2. [Lab 2 — Взаємодія між компонентами та роутинг у Vue.js](lab2/)
