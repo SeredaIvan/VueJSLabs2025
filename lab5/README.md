@@ -109,6 +109,11 @@ app.use(ToastService)
 ![alt text](readme_images/image11.png)
 ![alt text](readme_images/image12.png)
 ![alt text](readme_images/image13.png)
+![alt text](readme_images/image14.png)
+![alt text](readme_images/image15.png)
+![alt text](readme_images/image16.png)
+![alt text](readme_images/image17.png)
+![alt text](readme_images/image18.png)
 
 **Особливості налаштування:**
 
