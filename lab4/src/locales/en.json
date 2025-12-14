@@ -1,0 +1,33 @@
+{
+    "titles": {
+        "profile": "Profile",
+        "cart": "Cart",
+        "products": "Products"
+    },
+    "buttons": {
+        "add_to_cart": "Add to Cart",
+        "remove": "Remove",
+        "clear_cart": "Clear Cart",
+        "submit": "Submit",
+        "reset": "Reset"
+    },
+    "labels": {
+        "name": "Name",
+        "email": "Email",
+        "dob": "Date of Birth",
+        "address": "Address",
+        "phone": "Phone",
+        "add_phone": "Add Phone"
+    },
+    "messages": {
+        "cart_empty": "Your cart is empty",
+        "total": "Total",
+        "items_count": "Items count",
+        "saved": "Profile saved!"
+    },
+    "errors": {
+        "required": "{field} is required",
+        "email": "{field} must be a valid email",
+        "min": "{field} must be at least 2 characters"
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "titles": {
+        "profile": "Профіль",
+        "cart": "Кошик",
+        "products": "Товари"
+    },
+    "buttons": {
+        "add_to_cart": "Додати в кошик",
+        "remove": "Видалити",
+        "clear_cart": "Очистити кошик",
+        "submit": "Зберегти",
+        "reset": "Скинути"
+    },
+    "labels": {
+        "name": "Ім'я",
+        "email": "Email",
+        "dob": "Дата народження",
+        "address": "Адреса",
+        "phone": "Телефон",
+        "add_phone": "Додати номер"
+    },
+    "messages": {
+        "cart_empty": "Ваш кошик порожній",
+        "total": "Всього",
+        "items_count": "Кількість товарів",
+        "saved": "Профіль збережено!"
+    },
+    "errors": {
+        "required": "Поле {field} є обов'язковим",
+        "email": "Поле {field} має бути валідним email",
+        "min": "Поле {field} має містити мінімум 2 символи"
+    }
+}
